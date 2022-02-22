@@ -12,7 +12,7 @@ jwt-expiry-mins = 10
 
 [api-key-jwt-map]
     
-	# Setup API Keys and associated JWT claims
+    # Setup API Keys and associated JWT claims
     [api-key-jwt-map."f30d3c1a-4144-4321-ba6c-bed3cf4a7308"]
     sub = "1"
     name = "test-user"
