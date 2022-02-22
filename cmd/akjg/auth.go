@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	c "github.com/pvik/akjg/internal/config"
 	"github.com/pvik/akjg/pkg/httphelper"
@@ -27,12 +28,14 @@ func apiLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// log.Infof("using Claims: %+v", apiKeyJwtClaims)
-
 	jwtClaims := make(jwt.MapClaims)
 	for k, v := range apiKeyJwtClaims {
 		jwtClaims[k] = v
 	}
+
+	// populate iat and exp claim
+	jwtClaims["iat"] = time.Now().UTC().Unix()
+	jwtClaims["exp"] = time.Now().Add(time.Duration(c.AppConf.JWTExpiryMins) * time.Minute).UTC().Unix()
 
 	// Create a new token object, specifying signing method and the claims
 	// you would like it to contain.

@@ -39,14 +39,15 @@ level = "debug"
 
 ```bash
 $ curl 'http://localhost:3000/akjg/v1/jwt?apikey=f30d3c1a-4144-4321-ba6c-bed3cf4a7308'
-{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6ZmFsc2UsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJlZGl0b3IiLCJ1c2VyIiwibW9kIl0sIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1vcmctaWQiOiIxMjMifSwibmFtZSI6InRlc3QtdXNlciIsInN1YiI6IjEifQ.jSGbSWE7BWngjXsUyOohw_W7Kay3RdQuHK1kEqnwnW0"}
+{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6ZmFsc2UsImV4cCI6MTY0NTU1NTI1MywiaHR0cHM6Ly9oYXN1cmEuaW8vand0L2NsYWltcyI6eyJ4LWhhc3VyYS1hbGxvd2VkLXJvbGVzIjpbImVkaXRvciIsInVzZXIiLCJtb2QiXSwieC1oYXN1cmEtZGVmYXVsdC1yb2xlIjoidXNlciIsIngtaGFzdXJhLW9yZy1pZCI6IjEyMyJ9LCJpYXQiOjE2NDU1NTQ2NTMsIm5hbWUiOiJ0ZXN0LXVzZXIiLCJzdWIiOiIxIn0.AC6wIru-pK_vlZs06He_97n9XohnUb-fjnOp5MyK4Dk"}
 ```
 
-The decoded JWT above:
+The decoded payload from JWT above:
 
 ```json
 {
   "admin": false,
+  "exp": 1645555253,
   "https://hasura.io/jwt/claims": {
     "x-hasura-allowed-roles": [
       "editor",
@@ -56,6 +57,7 @@ The decoded JWT above:
     "x-hasura-default-role": "user",
     "x-hasura-org-id": "123"
   },
+  "iat": 1645554653,
   "name": "test-user",
   "sub": "1"
 }
