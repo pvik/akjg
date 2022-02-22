@@ -1,7 +1,7 @@
 FROM golang:latest AS builder
 ADD . /app/
 WORKDIR /app/
-RUN make
+RUN CGO_ENABLED=0 make
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates tzdata
