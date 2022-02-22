@@ -1,0 +1,21 @@
+port = 3000
+
+jwt-secret = "abc"
+jwt-expiry-mins = 10
+
+[api-key-jwt-map]
+    
+    [api-key-jwt-map."f30d3c1a-4144-4321-ba6c-bed3cf4a7308"]
+    sub = "1"
+    name = "test-user"
+    admin = false
+       [api-key-jwt-map."f30d3c1a-4144-4321-ba6c-bed3cf4a7308"."https://hasura.io/jwt/claims"]
+       x-hasura-default-role = "user"
+       x-hasura-allowed-roles = ["editor","user", "mod"]
+       x-hasura-org-id = "123"
+
+[log]
+format = "text" # valid values are text or json
+output = "term" # valid values are term or file
+log-directory = "./logs/"
+level = "debug"
