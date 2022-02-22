@@ -1,6 +1,6 @@
 port = 3000
 
-jwt-secret = "abc"
+jwt-secret = "abc" # generate a strong secret (https://cloud.google.com/network-connectivity/docs/vpn/how-to/generating-pre-shared-key)
 jwt-expiry-mins = 10
 
 [api-key-jwt-map]
@@ -17,5 +17,5 @@ jwt-expiry-mins = 10
 [log]
 format = "text" # valid values are text or json
 output = "term" # valid values are term or file
-log-directory = "./logs/"
+#log-directory = "./logs/" # needed if writing logs to a file
 level = "debug"
