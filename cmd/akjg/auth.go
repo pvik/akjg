@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	c "github.com/pvik/akjg/internal/config"
@@ -11,7 +13,45 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func apiLogin(w http.ResponseWriter, r *http.Request) {
+func apiAuth(w http.ResponseWriter, r *http.Request) {
+	authHeaderArr, ok := r.Header["Authorization"]
+	if !ok || len(authHeaderArr) < 1 || len(authHeaderArr[0]) < 1 {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	if strings.HasPrefix(authHeaderArr[0], "Bearer ") {
+		tokenString := strings.Split(authHeaderArr[0], " ")[1]
+
+		// Parse takes the token string and a function for looking up the key
+		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+			// Don't forget to validate the alg is what you expect:
+			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+			}
+
+			return []byte(c.AppConf.JWTSecret), nil
+		})
+		if err != nil {
+			log.Errorf("parse token err: %s", err)
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			// if JWT has exp claim, check if it has not expired
+			//  jwt.Parse verifies token expiry
+
+			httphelper.RespondwithJSON(w, 200, claims)
+			return
+		}
+	}
+
+	w.WriteHeader(http.StatusUnauthorized)
+	return
+}
+
+func apiJWT(w http.ResponseWriter, r *http.Request) {
 	apikeyArr, ok := r.URL.Query()["apikey"]
 
 	if !ok || len(apikeyArr) < 1 || len(apikeyArr[0]) < 1 {

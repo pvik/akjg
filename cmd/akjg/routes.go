@@ -35,7 +35,9 @@ func routes() *chi.Mux {
 	r.Use(middleware.DefaultLogger)
 
 	r.Route("/akjg/v1", func(r1 chi.Router) {
-		r1.Get("/jwt", apiLogin)
+		r1.Get("/jwt", apiJWT)
+		r1.Get("/auth", apiAuth)
+
 	})
 
 	return r
