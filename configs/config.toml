@@ -1,7 +1,7 @@
 port = 3000
 
 jwt-secret = "abc" # generate a strong secret (https://cloud.google.com/network-connectivity/docs/vpn/how-to/generating-pre-shared-key)
-jwt-expiry-mins = 10
+jwt-expiry-mins = 120
 
 [api-key-jwt-map]
     
